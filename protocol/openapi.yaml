@@ -1,0 +1,130 @@
+openapi: 3.1.0
+info:
+  title: Vivy LAN API
+  version: 1.0.0
+  description: Trusted household LAN contract between a Vivy Kiosk and desktop daemon.
+servers:
+  - url: http://localhost:43821
+paths:
+  /v1/health:
+    get:
+      operationId: getHealth
+      responses:
+        '200':
+          description: Daemon health and capabilities.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/HealthResponse' }
+  /v1/state:
+    get:
+      operationId: getState
+      responses:
+        '200':
+          description: Current computer state.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ComputerState' }
+  /v1/notifications:
+    get:
+      operationId: listNotifications
+      parameters:
+        - name: after
+          in: query
+          schema: { type: integer, minimum: 0 }
+      responses:
+        '200':
+          description: Notifications newer than the supplied cursor.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/NotificationPage' }
+  /v1/actions:
+    post:
+      operationId: performAction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ActionRequest' }
+      responses:
+        '200':
+          description: Action result.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ActionResult' }
+        '400': { description: Invalid action arguments. }
+  /v1/events:
+    get:
+      description: WebSocket stream of EventEnvelope messages.
+      responses:
+        '101': { description: Switching protocols. }
+  /v1/webrtc:
+    get:
+      description: WebSocket relay for WebRtcSignal messages.
+      responses:
+        '101': { description: Switching protocols. }
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      required: [service, version, platform, uptime_seconds, capabilities]
+      properties:
+        service: { const: vivy-daemon }
+        version: { type: string }
+        platform: { type: string }
+        uptime_seconds: { type: integer, minimum: 0 }
+        capabilities: { type: array, items: { type: string } }
+    ComputerState:
+      type: object
+      required: [online, volume, media_playing, notification_access]
+      properties:
+        online: { type: boolean }
+        volume: { type: integer, minimum: 0, maximum: 100 }
+        media_playing: { type: boolean }
+        notification_access: { type: string, enum: [available, denied, unsupported] }
+    DesktopNotification:
+      type: object
+      required: [sequence, id, source, title, body, created_at]
+      properties:
+        sequence: { type: integer, minimum: 1 }
+        id: { type: string, format: uuid }
+        source: { type: string }
+        title: { type: string }
+        body: { type: string }
+        created_at: { type: string, format: date-time }
+    NotificationPage:
+      type: object
+      required: [cursor, items]
+      properties:
+        cursor: { type: integer, minimum: 0 }
+        items: { type: array, items: { $ref: '#/components/schemas/DesktopNotification' } }
+    ActionRequest:
+      type: object
+      required: [request_id, action, arguments]
+      properties:
+        request_id: { type: string, format: uuid }
+        action: { type: string, enum: [launch_app, send_shortcut, set_volume, media_play_pause, lock_computer, open_url] }
+        arguments: { type: object, additionalProperties: true }
+    ActionResult:
+      type: object
+      required: [request_id, accepted, message]
+      properties:
+        request_id: { type: string, format: uuid }
+        accepted: { type: boolean }
+        message: { type: string }
+    EventEnvelope:
+      type: object
+      required: [sequence, type, occurred_at, payload]
+      properties:
+        sequence: { type: integer, minimum: 1 }
+        type: { type: string }
+        occurred_at: { type: string, format: date-time }
+        payload: {}
+    WebRtcSignal:
+      type: object
+      required: [peer_id, type, payload]
+      properties:
+        peer_id: { type: string }
+        target_peer_id: { type: [string, 'null'] }
+        type: { type: string, enum: [join, offer, answer, ice_candidate, peer_left] }
+        payload: {}
+

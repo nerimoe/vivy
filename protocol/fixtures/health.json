@@ -1,0 +1,8 @@
+{
+  "service": "vivy-daemon",
+  "version": "0.1.0",
+  "platform": "macos",
+  "uptime_seconds": 42,
+  "capabilities": ["actions", "events", "webrtc"]
+}
+

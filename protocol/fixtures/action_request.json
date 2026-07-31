@@ -1,0 +1,6 @@
+{
+  "request_id": "a405a165-aca7-4e17-a838-5dd0e849e22b",
+  "action": "set_volume",
+  "arguments": {"value": 35}
+}
+

@@ -1,0 +1,10 @@
+.DS_Store
+.idea/
+.vscode/
+target/
+**/target/
+**/.dart_tool/
+**/build/
+**/android/local.properties
+**/*.iml
+

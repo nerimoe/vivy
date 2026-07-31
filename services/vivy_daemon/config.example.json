@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "browser": {
+      "program": "/usr/bin/open",
+      "args": ["-a", "Google Chrome"]
+    }
+  },
+  "shortcuts": {},
+  "allowed_url_hosts": ["calendar.google.com"]
+}
