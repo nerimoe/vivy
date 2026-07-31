@@ -1,6 +1,6 @@
 # Vivy Implementation Checkpoint
 
-Last updated: 2026-08-01 (Release automation and aligned information rail in progress)
+Last updated: 2026-08-01 (GitHub release automation and aligned information rail verified)
 
 ## Objective
 
@@ -26,13 +26,13 @@ Phase 5: Android real-device integration and remaining native adapters.
 
 ## Current Task
 
-Finish the aligned date/notification/status rail and configure the public GitHub repository with automatic ARM64 release publishing.
+Validate the remaining native recording, ambient-light, Google OAuth, Android Keystore, and Realtime voice paths on Xperia SO-02J.
 
 ## Completion Criteria
 
-- Keep date, notification, and right status cells on the same fixed 48px rail geometry after date font changes.
-- Create the public `nerimoe/vivy` repository and push the complete project history.
-- Run ARM64 Android builds on every push; publish unchanged-version commits as pre-releases and higher-version commits as latest formal releases.
+- Validate native recording and physical retention behavior on Xperia without deleting user data.
+- Validate ambient-light transitions and document credential-dependent Google/voice paths.
+- Implement and hardware-test the remaining platform adapters where credentials and hardware are available.
 
 ## Completed
 
@@ -109,6 +109,9 @@ Finish the aligned date/notification/status rail and configure the public GitHub
 - Added a matching compact-only right inset so the bottom rail stays inside the large clock's horizontal footprint on both sides. Re-ran `flutter analyze` and all 21 tests, rebuilt Web and ARM64 release artifacts, and installed version `3011` exclusively on `BH90CEW05U`; final idle/revealed screenshots are `/tmp/vivy-xperia-arm64-date-rail-symmetric-final.png` and `/tmp/vivy-xperia-arm64-date-rail-symmetric-revealed.png`.
 - Replaced the numeric weekday with locale-aware short labels: Chinese `一二三四五六日`, English `MON TUE WED...`, and Japanese `月火水木金土日`. The month/day portion is fixed-width `MM/dd`, producing `08/01 SAT` on the Xperia's English locale. Added mapping tests, re-ran all 23 Flutter tests, rebuilt Web and ARM64 release artifacts, and installed version `3012` exclusively on `BH90CEW05U`; the final screenshot is `/tmp/vivy-xperia-arm64-date-localized-final.png`.
 - Separated bottom-date styling from the clock: the date uses neutral `onSurfaceVariant` tones, 30/28sp hierarchy, and the independently persisted `Date type` picker with all eight bundled typefaces. Kept the cache control visible in Xperia landscape settings, re-ran `flutter analyze` and all 23 tests, rebuilt Web and ARM64 release artifacts, and installed version `3013` exclusively on `BH90CEW05U`; the final screenshot is `/tmp/vivy-xperia-arm64-date-styled-final.png`.
+- Fixed the information rail geometry after date typeface changes: date, notification, and right status cells share fixed 48px heights while the date keeps a bounded 180 logical-pixel width. Rebuilt and installed version `3014` exclusively on `BH90CEW05U`; the final dark-theme screenshot is `/tmp/vivy-xperia-arm64-rail-aligned-final.png`.
+- Added `.github/workflows/android-release.yml`: every push verifies Flutter, builds an ARM64 APK, and publishes a release named `<version>+<short-commit>`. Equal or lower versions become pre-releases; higher versions become the latest formal release. Added release documentation to `README.md`.
+- Created the public repository [nerimoe/vivy](https://github.com/nerimoe/vivy), pushed the initial history and the timezone-stable test fix, and verified both GitHub Actions workflows. The first formal latest release is `v1.0.0+e8a75a1` with `vivy-1.0.0+e8a75a1-arm64-v8a.apk`.
 
 ## Next Actions
 
