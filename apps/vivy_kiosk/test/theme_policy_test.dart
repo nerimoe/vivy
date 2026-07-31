@@ -19,11 +19,21 @@ void main() {
     final midnight = DateTime(2026, 7, 30);
 
     expect(
-      engine.fromSun(now: midday, latitude: latitude, longitude: longitude),
+      engine.fromSun(
+        now: midday,
+        latitude: latitude,
+        longitude: longitude,
+        timeZoneOffset: const Duration(hours: 9),
+      ),
       Brightness.light,
     );
     expect(
-      engine.fromSun(now: midnight, latitude: latitude, longitude: longitude),
+      engine.fromSun(
+        now: midnight,
+        latitude: latitude,
+        longitude: longitude,
+        timeZoneOffset: const Duration(hours: 9),
+      ),
       Brightness.dark,
     );
   });

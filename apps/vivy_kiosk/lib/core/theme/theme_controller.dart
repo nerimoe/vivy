@@ -95,11 +95,12 @@ class ThemePolicyEngine {
     required DateTime now,
     required double latitude,
     required double longitude,
+    Duration? timeZoneOffset,
   }) {
     final solar = getSunriseSunset(
       latitude,
       longitude,
-      now.timeZoneOffset,
+      timeZoneOffset ?? now.timeZoneOffset,
       DateTime(now.year, now.month, now.day),
     );
     final wallClock = DateTime.utc(
