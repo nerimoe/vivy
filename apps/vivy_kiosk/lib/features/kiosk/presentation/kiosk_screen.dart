@@ -211,7 +211,7 @@ class _InformationRail extends StatelessWidget {
           width: double.infinity,
           height: 48,
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               _DateDisplay(now: now),
               const SizedBox(width: 20),
@@ -227,7 +227,7 @@ class _InformationRail extends StatelessWidget {
               _StatusSlot(
                 visible: chromeVisible,
                 child: IconButton(
-                  alignment: Alignment.bottomCenter,
+                  alignment: Alignment.center,
                   padding: EdgeInsets.zero,
                   tooltip: 'Settings',
                   onPressed: () => showVivyPanel(
@@ -269,7 +269,7 @@ class _DateDisplay extends ConsumerWidget {
           height: 48,
           child: FittedBox(
             fit: BoxFit.scaleDown,
-            alignment: Alignment.bottomLeft,
+            alignment: Alignment.centerLeft,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -437,7 +437,7 @@ class _NotificationStatusAreaState extends State<_NotificationStatusArea> {
           child: SizedBox(
             height: 48,
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(icon, size: 24, color: color),
                 const SizedBox(width: 8),
@@ -446,7 +446,7 @@ class _NotificationStatusAreaState extends State<_NotificationStatusArea> {
                     duration: const Duration(milliseconds: 280),
                     layoutBuilder: (currentChild, previousChildren) => Stack(
                       clipBehavior: Clip.none,
-                      alignment: Alignment.bottomLeft,
+                      alignment: Alignment.centerLeft,
                       children: <Widget>[
                         ...previousChildren,
                         ...?currentChild == null
@@ -456,7 +456,7 @@ class _NotificationStatusAreaState extends State<_NotificationStatusArea> {
                     ),
                     child: Align(
                       key: ValueKey(item.id),
-                      alignment: Alignment.bottomLeft,
+                      alignment: Alignment.centerLeft,
                       child: Text(
                         item.message,
                         maxLines: 1,
@@ -736,7 +736,7 @@ class _StatusDock extends ConsumerWidget {
       height: 48,
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(width: 4),
           _StatusSlot(
@@ -756,7 +756,7 @@ class _StatusDock extends ConsumerWidget {
                   child: SizedBox.square(
                     dimension: 48,
                     child: Align(
-                      alignment: Alignment.bottomCenter,
+                      alignment: Alignment.center,
                       child: _RecordingLight(status: recording.status),
                     ),
                   ),
@@ -767,7 +767,7 @@ class _StatusDock extends ConsumerWidget {
           _StatusSlot(
             visible: showVoice,
             child: IconButton(
-              alignment: Alignment.bottomCenter,
+              alignment: Alignment.center,
               padding: EdgeInsets.zero,
               tooltip: androidVoice
                   ? 'Voice assistant ready'
@@ -791,7 +791,7 @@ class _StatusDock extends ConsumerWidget {
           _StatusSlot(
             visible: showComputer,
             child: IconButton(
-              alignment: Alignment.bottomCenter,
+              alignment: Alignment.center,
               padding: EdgeInsets.zero,
               tooltip: computerOnline
                   ? 'Home computer online'
@@ -829,7 +829,7 @@ class _StatusSlot extends StatelessWidget {
       switchOutCurve: Curves.easeInCubic,
       layoutBuilder: (currentChild, previousChildren) => Stack(
         clipBehavior: Clip.none,
-        alignment: Alignment.bottomCenter,
+        alignment: Alignment.center,
         children: <Widget>[
           ...previousChildren,
           ...?currentChild == null ? null : <Widget>[currentChild],
