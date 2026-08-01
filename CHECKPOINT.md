@@ -1,6 +1,6 @@
 # Vivy Implementation Checkpoint
 
-Last updated: 2026-08-01 (GitHub release automation and aligned information rail verified)
+Last updated: 2026-08-01 (Android package rename and bottom rail alignment verified)
 
 ## Objective
 
@@ -112,6 +112,8 @@ Validate the remaining native recording, ambient-light, Google OAuth, Android Ke
 - Fixed the information rail geometry after date typeface changes: date, notification, and right status cells share fixed 48px heights while the date keeps a bounded 180 logical-pixel width. Rebuilt and installed version `3014` exclusively on `BH90CEW05U`; the final dark-theme screenshot is `/tmp/vivy-xperia-arm64-rail-aligned-final.png`.
 - Added `.github/workflows/android-release.yml`: every push verifies Flutter, builds an ARM64 APK, and publishes a release named `<version>+<short-commit>`. Equal or lower versions become pre-releases; higher versions become the latest formal release. Added release documentation to `README.md`.
 - Created the public repository [nerimoe/vivy](https://github.com/nerimoe/vivy), pushed the initial history and the timezone-stable test fix, and verified both GitHub Actions workflows. The first formal latest release is `v1.0.0+e8a75a1` with `vivy-1.0.0+e8a75a1-arm64-v8a.apk`.
+- Renamed the Android namespace, application id, and `MainActivity` package to `moe.neri.vivy` while preserving the existing Flutter channel names. Bottom-aligned the date, notification, and right-side status cells in the 60px information rail.
+- Re-ran `flutter analyze` and all 23 Flutter tests, built the ARM64 release APK, installed version `3015` exclusively on Xperia `BH90CEW05U` (`primaryCpuAbi=arm64-v8a`), and visually verified `/tmp/vivy-xperia-arm64-package-bottom-final.png`. The new package produced no fatal or TLS errors in logcat.
 
 ## Next Actions
 

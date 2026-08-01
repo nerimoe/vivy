@@ -1,4 +1,4 @@
-package dev.vivy.vivy_kiosk
+package moe.neri.vivy
 
 import android.content.Context
 import android.hardware.Sensor

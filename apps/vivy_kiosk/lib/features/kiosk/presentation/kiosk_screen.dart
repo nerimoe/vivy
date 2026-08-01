@@ -206,6 +206,7 @@ class _InformationRail extends StatelessWidget {
       width: double.infinity,
       height: 60,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           _DateDisplay(now: now),
           const SizedBox(width: 20),
