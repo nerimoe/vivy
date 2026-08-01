@@ -211,25 +211,40 @@ class _InformationRail extends StatelessWidget {
           _DateDisplay(now: now),
           const SizedBox(width: 20),
           Expanded(
-            child: _NotificationStatusArea(
-              now: now,
-              weather: weather,
-              desktopNotifications: desktopNotifications,
-              upcoming: upcoming,
+            child: Transform.translate(
+              offset: const Offset(0, 8.5),
+              child: _NotificationStatusArea(
+                now: now,
+                weather: weather,
+                desktopNotifications: desktopNotifications,
+                upcoming: upcoming,
+              ),
             ),
           ),
-          _StatusDock(recording: recording, chromeVisible: chromeVisible),
-          _StatusSlot(
-            visible: chromeVisible,
-            child: IconButton(
-              tooltip: 'Settings',
-              onPressed: () => showVivyPanel(
-                context,
-                title: 'Settings',
-                child: const _SettingsPanel(),
-                landscapeWorkspace: true,
+          // Keep the 48dp hit targets intact while matching the visible ink baseline.
+          Transform.translate(
+            offset: const Offset(0, 3.5),
+            child: _StatusDock(
+              recording: recording,
+              chromeVisible: chromeVisible,
+            ),
+          ),
+          Transform.translate(
+            offset: const Offset(0, 3.5),
+            child: _StatusSlot(
+              visible: chromeVisible,
+              child: IconButton(
+                alignment: Alignment.bottomCenter,
+                padding: const EdgeInsets.only(bottom: 3),
+                tooltip: 'Settings',
+                onPressed: () => showVivyPanel(
+                  context,
+                  title: 'Settings',
+                  child: const _SettingsPanel(),
+                  landscapeWorkspace: true,
+                ),
+                icon: const Icon(Icons.tune_rounded, size: 20),
               ),
-              icon: const Icon(Icons.tune_rounded, size: 20),
             ),
           ),
         ],
@@ -258,7 +273,7 @@ class _DateDisplay extends ConsumerWidget {
           height: 48,
           child: FittedBox(
             fit: BoxFit.scaleDown,
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.bottomLeft,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -426,6 +441,7 @@ class _NotificationStatusAreaState extends State<_NotificationStatusArea> {
           child: SizedBox(
             height: 48,
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Icon(icon, size: 19, color: color),
                 const SizedBox(width: 8),
@@ -433,6 +449,7 @@ class _NotificationStatusAreaState extends State<_NotificationStatusArea> {
                   child: AnimatedSwitcher(
                     duration: const Duration(milliseconds: 280),
                     layoutBuilder: (currentChild, previousChildren) => Stack(
+                      clipBehavior: Clip.none,
                       alignment: Alignment.centerLeft,
                       children: <Widget>[
                         ...previousChildren,
@@ -719,6 +736,7 @@ class _StatusDock extends ConsumerWidget {
       height: 48,
       child: Row(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           const SizedBox(width: 4),
           _StatusSlot(
@@ -737,8 +755,12 @@ class _StatusDock extends ConsumerWidget {
                   ),
                   child: SizedBox.square(
                     dimension: 48,
-                    child: Center(
-                      child: _RecordingLight(status: recording.status),
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 3),
+                        child: _RecordingLight(status: recording.status),
+                      ),
                     ),
                   ),
                 ),
@@ -748,6 +770,8 @@ class _StatusDock extends ConsumerWidget {
           _StatusSlot(
             visible: showVoice,
             child: IconButton(
+              alignment: Alignment.bottomCenter,
+              padding: const EdgeInsets.only(bottom: 3),
               tooltip: androidVoice
                   ? 'Voice assistant ready'
                   : 'Voice assistant unavailable',
@@ -770,6 +794,8 @@ class _StatusDock extends ConsumerWidget {
           _StatusSlot(
             visible: showComputer,
             child: IconButton(
+              alignment: Alignment.bottomCenter,
+              padding: const EdgeInsets.only(bottom: 3),
               tooltip: computerOnline
                   ? 'Home computer online'
                   : 'Computer offline',
@@ -804,6 +830,14 @@ class _StatusSlot extends StatelessWidget {
       duration: const Duration(milliseconds: 220),
       switchInCurve: Curves.easeOutCubic,
       switchOutCurve: Curves.easeInCubic,
+      layoutBuilder: (currentChild, previousChildren) => Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.center,
+        children: <Widget>[
+          ...previousChildren,
+          ...?currentChild == null ? null : <Widget>[currentChild],
+        ],
+      ),
       child: visible ? child : const SizedBox.shrink(),
     );
   }

@@ -1,6 +1,6 @@
 # Vivy Implementation Checkpoint
 
-Last updated: 2026-08-01 (Android package rename and bottom rail alignment verified)
+Last updated: 2026-08-01 (Bottom rail visual baseline correction verified)
 
 ## Objective
 
@@ -114,6 +114,7 @@ Validate the remaining native recording, ambient-light, Google OAuth, Android Ke
 - Created the public repository [nerimoe/vivy](https://github.com/nerimoe/vivy), pushed the initial history and the timezone-stable test fix, and verified both GitHub Actions workflows. The first formal latest release is `v1.0.0+e8a75a1` with `vivy-1.0.0+e8a75a1-arm64-v8a.apk`.
 - Renamed the Android namespace, application id, and `MainActivity` package to `moe.neri.vivy` while preserving the existing Flutter channel names. Bottom-aligned the date, notification, and right-side status cells in the 60px information rail.
 - Re-ran `flutter analyze` and all 23 Flutter tests, built the ARM64 release APK, installed version `3015` exclusively on Xperia `BH90CEW05U` (`primaryCpuAbi=arm64-v8a`), and visually verified `/tmp/vivy-xperia-arm64-package-bottom-final.png`. The new package produced no fatal or TLS errors in logcat.
+- Corrected the information rail's visual ink baseline while preserving 48px hit targets: notification content uses an 8.5dp visual offset and status/settings use 3.5dp. Re-ran `flutter analyze` and all 23 Flutter tests, built version `5024`, and explicitly launched `moe.neri.vivy/.MainActivity` on Xperia `BH90CEW05U` (`primaryCpuAbi=arm64-v8a`). Date and status ink both measure `y=687` in `/tmp/vivy-xperia-arm64-bottom-visual-alignment-new-package-final-3024.png`; the revealed rail is `/tmp/vivy-xperia-arm64-bottom-visual-alignment-new-package-revealed-3024.png`.
 
 ## Next Actions
 
