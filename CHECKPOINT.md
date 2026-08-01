@@ -1,6 +1,6 @@
 # Vivy Implementation Checkpoint
 
-Last updated: 2026-08-01 (Bottom rail visual baseline correction verified)
+Last updated: 2026-08-02 (Information rail container and type scale verified)
 
 ## Objective
 
@@ -115,6 +115,7 @@ Validate the remaining native recording, ambient-light, Google OAuth, Android Ke
 - Renamed the Android namespace, application id, and `MainActivity` package to `moe.neri.vivy` while preserving the existing Flutter channel names. Bottom-aligned the date, notification, and right-side status cells in the 60px information rail.
 - Re-ran `flutter analyze` and all 23 Flutter tests, built the ARM64 release APK, installed version `3015` exclusively on Xperia `BH90CEW05U` (`primaryCpuAbi=arm64-v8a`), and visually verified `/tmp/vivy-xperia-arm64-package-bottom-final.png`. The new package produced no fatal or TLS errors in logcat.
 - Corrected the information rail's visual ink baseline while preserving 48px hit targets: notification content uses an 8.5dp visual offset and status/settings use 3.5dp. Re-ran `flutter analyze` and all 23 Flutter tests, built version `5024`, and explicitly launched `moe.neri.vivy/.MainActivity` on Xperia `BH90CEW05U` (`primaryCpuAbi=arm64-v8a`). Date and status ink both measure `y=687` in `/tmp/vivy-xperia-arm64-bottom-visual-alignment-new-package-final-3024.png`; the revealed rail is `/tmp/vivy-xperia-arm64-bottom-visual-alignment-new-package-revealed-3024.png`.
+- Replaced the information rail's fixed visual transforms with one bottom-aligned 48dp content container inside the 60dp rail. Notification text and the page counter now share the date/weekday's 28sp type scale, and status switchers are bottom-anchored without pixel padding. Re-ran `flutter analyze` and all 23 Flutter tests, built version `5025`, and verified `/tmp/vivy-xperia-rail-container-3025.png` plus the revealed state `/tmp/vivy-xperia-rail-container-3025-revealed.png` on `moe.neri.vivy/.MainActivity`; date and status ink both measure `y=687`.
 
 ## Next Actions
 
